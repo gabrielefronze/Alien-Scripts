@@ -35,4 +35,4 @@ The scripts of this repository can be exported as usual via editing the .bash_pr
   alias alien_kill_done='source /path_to_scripts/kill_done_par.sh'
   ```
   
-**CAVEAT:** If one manages to run two istances of this **non-blocking** scripts in a while (read: before the first command queue has been emptied) the second script will hang on until all the commands have been perfomed correctly, hence turning to a **blocking** behavior. This is kindly due to Alien queue handling policies and is not really related to the scripts themselves. 
+**CAVEAT:** If one manages to run two istances of this **non-blocking** scripts in a while (read: before the first command queue has been emptied) the second script will hang on until all the commands haven't been perfomed correctly, hence turning to a **blocking** behavior. This is kindly due to Alien queue handling policies and is not really related to the scripts themselves. 
