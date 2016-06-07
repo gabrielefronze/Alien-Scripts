@@ -1,9 +1,9 @@
-#! /bin/bash   
+#! /bin/bash
 #title           :resubmit.sh
 #description     :This script automatically resubmits failed jobs on the GRID
 #author		     :Gabriele Gaetano Fronzé
 #date            :20150303
-#version         :0.1    
+#version         :0.1
 #usage		     :source resubmit.sh
 #notes           :Install Alien to use this script.
 #bash_version    :4.2.45(1)-release
@@ -37,9 +37,9 @@ case $yn in
 				case $yn1 in
 					[Yy]* )
 							alien_ps -b -E > proc.txt
-							FILEPATH="proc.txt"		
-							AUTOFLAG=1	
-							;;	
+							FILEPATH="proc.txt"
+							AUTOFLAG=1
+							;;
 					[Nn]* )
 							echo "| Why did you run me?"
 							return 2
@@ -50,7 +50,7 @@ case $yn in
 							;;
 				esac
 			;;
-	* ) 
+	* )
 			echo  "| Please use Yes or No."
 			return 1
 			;;
@@ -70,7 +70,7 @@ if [[("$FAILED" == 0) && ("$MFAILED" == 0)]]; then
 	echo "|"
 	echo "|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯"
 	echo "| The script has nothing to do, everything is fine with your jobs!"
-	echo "|________________________________________________________________________"	
+	echo "|________________________________________________________________________"
 
 	# clear variables
 	unset FILEPATH
@@ -85,10 +85,10 @@ if [[("$FAILED" == 0) && ("$MFAILED" == 0)]]; then
 fi
 
 # retrieves the jqouta from alien in order to avoid over-limit resubmissions
-JQUOTA="$($ALICE_PREFIX/alien/api/bin/gbbox 'jquota list gfronze' | grep -o '[0-9]*[0-9]\{2\}/  100' | rev | cut -c 7- | rev)"
+JQUOTA="$($ALIEN_RUNTIME_ROOT/bin/gbbox 'jquota list gfronze' | grep -o '[0-9]*[0-9]\{2\}/  1500' | rev | cut -c 7- | rev)"
 echo "|"
-echo "| Your actual job quota is: $JQUOTA/100"
-JQUOTAMAX=100
+echo "| Your actual job quota is: $JQUOTA/1500"
+JQUOTAMAX=1500
 COUNT=0
 MCOUNT=0
 
@@ -109,7 +109,7 @@ fi
 NFORKS=0
 
 # resubmits jobs using alien_resubmit until allowed
-while read line; do 
+while read line; do
 	#echo "$line" &
 	if (("$NFORKS" >= "MAXFORKS" )); then
 		echo "waiting a moment..."
@@ -134,7 +134,7 @@ wait
 NFORKS=0
 
 # resubmits mster jobs which splitting has gone wrong
-while read line2; do 
+while read line2; do
 	#echo "$line" &
 	if (("$NFORKS" >= "MAXFORKS" )); then
 		echo "waiting a moment..."
